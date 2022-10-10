@@ -8,8 +8,14 @@
 <body>
 <div th:replace="fragments/header :: header">header</div>
 
+<div class="border">
+    <a th:href="@{|/venuedetailsbyindex/${prevIndex}|}" href="#" class="nextprev">&lt;</a>
+</div>
 <div class="container">
     <h1 th:text="${venueTitle}">venueTitle</h1>
     <p>Welcome to the Venue Index Page.</p>
+</div>
+<div class="border">
+    <a th:href="@{|/venuedetailsbyindex/${nextIndex}|}" href="#" class="nextprev">&gt;</a>
 </div>
 </html>
