@@ -7,10 +7,14 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header">header</div>
-
+<div class="border"></div>
 <div class="container">
-    <h1 th:if="${venuename}" th:text="${venuename}">venuename</h1>
-    <p th:unless="${venuename}">No venue is chosen</p>
-    <p>Welcome to the Venue Page.</p>
+    <div th:if="${venue}">
+        <h1  th:text="${venue.venueName}">venuename</h1>
+        <a th:href="${venue.linkMoreInfo}" href="#">More info</a>
+
+    </div>
+    <p th:unless="${venue}">No venue is chosen</p>
 </div>
+<div class="border"></div>
 </html>

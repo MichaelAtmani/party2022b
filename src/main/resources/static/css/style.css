@@ -104,6 +104,16 @@ p{
     background-color: deeppink;
 }
 
+.icon{
+    width: 100px;
+    float: left;
+}
+.icons{
+    clear:both;
+}
+.icon img{
+    width: 100px;
+}
 .branch2{
-    
+
 }

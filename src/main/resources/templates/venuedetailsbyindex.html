@@ -12,8 +12,18 @@
     <a th:href="@{|/venuedetailsbyindex/${prevIndex}|}" href="#" class="nextprev">&lt;</a>
 </div>
 <div class="container">
-    <h1 th:text="${venueTitle}">venueTitle</h1>
-    <p>Welcome to the Venue Index Page.</p>
+    <div th:if="${venue}">
+        <h1 th:text="${venue.venueName}">venueTitle</h1>
+        <a th:href="${venue.linkMoreInfo}" href="#">More info</a>
+        <div class="icons">
+        <div class="icon" th:if="${venue.hasFreeParking}"><img src="/img/freeparking.png"></div>
+        <div class="icon" th:if="${venue.hasGoodFood}"><img src="/img/goodfood.png"></div>
+        <div class="icon" th:if="${venue.getToddlerFriendly}"><img src="/img/toddler.png"></div>
+        <div class="icon" th:if="${venue.getTeenagerFriendly}"><img src="/img/teenagers.png"></div>
+        </div>
+
+    </div>
+    <p th:unless="${venue}">No valid venue is chosen</p>
 </div>
 <div class="border">
     <a th:href="@{|/venuedetailsbyindex/${nextIndex}|}" href="#" class="nextprev">&gt;</a>

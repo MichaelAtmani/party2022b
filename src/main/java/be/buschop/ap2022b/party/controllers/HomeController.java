@@ -1,6 +1,7 @@
 package be.buschop.ap2022b.party.controllers;
 
 
+import be.buschop.ap2022b.party.model.Venue;
 import org.hibernate.query.criteria.internal.predicate.BooleanExpressionPredicate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,14 @@ import java.util.Date;
 @Controller
 public class HomeController {
     private final int mySpecialNumber = 35;
-    private final String [] venuenames = {"Carré", "Zillion", "Cherrymoon", "Boccaccio", "Carat"};
+    private final Venue [] venues = {
+            new Venue("Bobbejaanland", "http://www.bobbejaanland.be", true, false, false, true),
+            new Venue("Plopsa", "http://www.plopsa.be", false, true, true, true),
+            new Venue("Walibi", "http://www.walibi.be", false, false, true, true),
+            new Venue("Legoland", "https://www.legoland.de/en/", false, false, true, true),
+            new Venue("Phantasialand", "https://www.phantasialand.de/en/", false, true, true, true),
+            new Venue("Efteling", "https://www.efteling.nl", false, true, true, true)
+    };
 
     @GetMapping(value = {"/", "/home", "/home/"})
     public String home (Model model){
@@ -54,7 +62,7 @@ public class HomeController {
 
     @GetMapping("/venuelist")
     public String venuelist (Model model){
-        model.addAttribute("venuenames",venuenames);
+        model.addAttribute("venues",venues);
         return "venuelist";
     }
 
@@ -66,28 +74,26 @@ public class HomeController {
 
     @GetMapping({"/venuedetailsbyindex","/venuedetailsbyindex/","/venuedetailsbyindex/{venueindex}"})
     public String venuedetailsbyindex(Model model, @PathVariable(required = false) String venueindex){
-        String venueTitle = "";
-        if(venueindex !=null && Integer.parseInt(venueindex)%1 == 0 && Integer.parseInt(venueindex)>= 0 && Integer.parseInt(venueindex)< 5 )
+
+        Venue venue = null;
+        if(venueindex !=null && Integer.parseInt(venueindex)%1 == 0 && Integer.parseInt(venueindex)>= 0 && Integer.parseInt(venueindex)< venues.length )
         {
-            //get venue data here
-            venueTitle = venuenames[Integer.parseInt(venueindex)];
+            //get venue object
+            venue = venues[Integer.parseInt(venueindex)];
         }
-        else
-        {
-            venueTitle = "no valid venue";
-        }
+
         int prevIndex = Integer.parseInt(venueindex)-1;
         if(prevIndex<0){
-            prevIndex = venuenames.length - 1;
+            prevIndex = venues.length - 1;
         }
 
         int nextIndex = Integer.parseInt(venueindex)+1;
-        if(nextIndex >4)
+        if(nextIndex >venues.length-1)
         {
             nextIndex = 0;
         }
 
-        model.addAttribute("venueTitle",venueTitle);
+        model.addAttribute("venue",venue);
         model.addAttribute("prevIndex", prevIndex);
         model.addAttribute("nextIndex", nextIndex);
         return "venuedetailsbyindex";

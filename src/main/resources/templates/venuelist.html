@@ -7,14 +7,15 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header">header</div>
-
+<div class="border"></div>
 <div class="container">
 <h1>Venue list</h1>
 <ul class="buttonlist">
-    <li th:each="venuename, iStat:${venuenames}">
-        <a th:href="@{|/venuedetailsbyindex/${iStat.index}|}" th:text="|${venuename}', met index: ' ${iStat.index} ' met in totaal ' ${iStat.size} ' elementen.'|" href="">venue name</a>
+
+    <li th:each="venue, iStat:${venues}">
+        <a th:href="@{|/venuedetailsbyindex/${iStat.index}|}" th:text="|${venue.getVenueName()}|" href="">venue name</a>
     </li>
 </ul>
 </div>
-
+<div class="border"></div>
 </html>
