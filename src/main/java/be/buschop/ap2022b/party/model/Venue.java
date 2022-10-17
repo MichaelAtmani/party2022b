@@ -6,7 +6,7 @@ import javax.persistence.Id;
 @Entity
 public class Venue {
     @Id
-    private String id;
+    private int id;
     private String venueName;
     private String linkMoreInfo;
     private Boolean hasFreeParking;

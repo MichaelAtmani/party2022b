@@ -13,7 +13,7 @@
 <ul class="buttonlist">
 
     <li th:each="venue, iStat:${venues}">
-        <a th:href="@{|/venuedetailsbyindex/${iStat.index}|}" th:text="|${venue.getVenueName()}|" href="">venue name</a>
+        <a th:href="@{|/venuedetailsbyid/*{iStat.index +1}|}" th:text="|${venue.getVenueName()}|" href="">venue name</a>
     </li>
 </ul>
 </div>
