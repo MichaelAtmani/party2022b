@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Artist details</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" href="../static/css/style.css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header">header</div>
+
+<div class="border">
+    <a th:if="${artist}" th:href="@{|/artistdetailsbyid/${prevIndex}|}" href="#" class="nextprev">&lt;</a>
+</div>
+<div class="container">
+
+    <div th:if="${artist}">
+        <h1 th:text="${artist.getArtistName()}">venueTitle</h1>
+        <a th:href="${artist.getLinkMoreInfo()}" href="#">More info</a>
+        <p th:text="${artist.getBio()}"></p>
+        <p th:text="${artist.getPortfolio()}"> </p>
+    </div>
+
+    <p th:unless="${artist}">No valid venue is chosen</p>
+</div>
+<div class="border">
+    <a th:if="${artist}" th:href="@{|/artistdetailsbyid/${nextIndex}|}" href="#" class="nextprev">&gt;</a>
+</div>
+</html>

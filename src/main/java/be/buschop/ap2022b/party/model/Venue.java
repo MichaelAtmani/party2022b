@@ -18,13 +18,22 @@ public class Venue {
 
     }
 
-    public Venue(String venueName, String linkMoreInfo, Boolean hasFreeParking, Boolean toddlerFriendly, Boolean hasGoodFood, Boolean teenagerFriendly) {
+    public Venue(int id, String venueName, String linkMoreInfo, Boolean hasFreeParking, Boolean toddlerFriendly, Boolean hasGoodFood, Boolean teenagerFriendly) {
+       this.id = id;
         this.venueName = venueName;
         this.linkMoreInfo = linkMoreInfo;
         this.hasFreeParking = hasFreeParking;
         this.toddlerFriendly = toddlerFriendly;
         this.hasGoodFood = hasGoodFood;
         this.teenagerFriendly = teenagerFriendly;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getVenueName() {

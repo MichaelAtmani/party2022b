@@ -12,6 +12,7 @@
     <a th:if="${venue}" th:href="@{|/venuedetailsbyid/${prevIndex}|}" href="#" class="nextprev">&lt;</a>
 </div>
 <div class="container">
+
     <div th:if="${venue}">
         <h1 th:text="${venue.venueName}">venueTitle</h1>
         <a th:href="${venue.linkMoreInfo}" href="#">More info</a>
@@ -21,8 +22,8 @@
             <div class="icon" th:if="${venue.getToddlerFriendly}"><img src="/img/toddler.png"></div>
             <div class="icon" th:if="${venue.getTeenagerFriendly}"><img src="/img/teenagers.png"></div>
         </div>
-
     </div>
+
     <p th:unless="${venue}">No valid venue is chosen</p>
 </div>
 <div class="border">

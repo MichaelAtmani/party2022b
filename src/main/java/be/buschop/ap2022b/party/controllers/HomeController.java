@@ -1,7 +1,9 @@
 package be.buschop.ap2022b.party.controllers;
 
 
+import be.buschop.ap2022b.party.model.Artist;
 import be.buschop.ap2022b.party.model.Venue;
+import be.buschop.ap2022b.party.repositories.ArtistRepository;
 import be.buschop.ap2022b.party.repositories.VenueRepository;
 import org.hibernate.query.criteria.internal.predicate.BooleanExpressionPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +23,18 @@ public class HomeController {
     private final int mySpecialNumber = 35;
 
     private final Venue [] venues = {
-            new Venue("Bobbejaanland", "http://www.bobbejaanland.be", true, false, false, true),
-            new Venue("Plopsa", "http://www.plopsa.be", false, true, true, true),
-            new Venue("Walibi", "http://www.walibi.be", false, false, true, true),
-            new Venue("Legoland", "https://www.legoland.de/en/", false, false, true, true),
-            new Venue("Phantasialand", "https://www.phantasialand.de/en/", false, true, true, true),
-            new Venue("Efteling", "https://www.efteling.nl", false, true, true, true)
+            new Venue(1,"Bobbejaanland", "http://www.bobbejaanland.be", true, false, false, true),
+            new Venue(2,"Plopsa", "http://www.plopsa.be", false, true, true, true),
+            new Venue(3,"Walibi", "http://www.walibi.be", false, false, true, true),
+            new Venue(4,"Legoland", "https://www.legoland.de/en/", false, false, true, true),
+            new Venue(5,"Phantasialand", "https://www.phantasialand.de/en/", false, true, true, true),
+            new Venue(6,"Efteling", "https://www.efteling.nl", false, true, true, true)
     };
 
     @Autowired
     private VenueRepository venueRepository;
+    @Autowired
+    private ArtistRepository artistRepository;
 
     @GetMapping(value = {"/", "/home", "/home/"})
     public String home (Model model){
@@ -74,12 +78,86 @@ public class HomeController {
         return "about";
     }
 
+    @GetMapping("/artistlist")
+    public String artistList(Model model){
+        Iterable<Artist> artists = artistRepository.findAll();
+        model.addAttribute("artists", artists);
+        return "artistlist";
+    }
+
+    @GetMapping({"/artistdetailsbyid","/artistdetailsbyid/","/artistdetailsbyid/{artistid}"})
+    public String artistdetailsbyid(Model model, @PathVariable(required = false) String artistid){
+
+        Optional oArtist = null;
+        Artist artist = null;
+        int artistCount = 0;
+
+        artistCount = (int) artistRepository.count();
+
+        oArtist = artistRepository.findById(Integer.parseInt(artistid));
+        if(oArtist.isPresent()){
+            artist = (Artist) oArtist.get();
+        }
+
+        int prevId = Integer.parseInt(artistid)-1;
+        if(prevId<1){
+            prevId = artistCount;
+        }
+
+        int nextId = Integer.parseInt(artistid)+1;
+        if(nextId > artistCount)
+        {
+            nextId = 1;
+        }
+
+        model.addAttribute("artist", artist);
+        model.addAttribute("prevIndex", prevId);
+        model.addAttribute("nextIndex", nextId);
+        return "artistdetailsbyid";
+    }
+
     @GetMapping("/venuelist")
     public String venuelist (Model model){
         Iterable<Venue> venues = venueRepository.findAll();
         model.addAttribute("venues",venues);
         return "venuelist";
     }
+
+    @GetMapping("/venuelist/hasgoodfood/{foodvalue}")
+    public String venuelistHasGoodFoodYes (Model model,@PathVariable Optional<String> foodvalue){
+        boolean food;
+        String myFood;
+
+        if(foodvalue.isPresent())
+        {
+            myFood = foodvalue.get();
+        }
+        else{
+            myFood = "all";
+        }
+
+        if(myFood == "yes")
+        {
+            food = true;
+        }
+        else
+        {
+            food = false;
+        }
+
+
+        if(myFood !="all") {
+            Iterable<Venue> venues = venueRepository.findByHasGoodFood(food);
+        }
+        else{
+            Iterable<Venue> venues = venueRepository.findAll();
+        }
+        model.addAttribute("venues",venues);
+        model.addAttribute("foodvalue", foodvalue);
+        return "venuelist";
+    }
+
+
 
     @GetMapping({"/venuedetails","/venuedetails/","/venuedetails/{venuename}"})
     public String venuedetails(Model model, @PathVariable(required = false) String venuename){
@@ -96,7 +174,13 @@ public class HomeController {
 
         venueCount = (int) venueRepository.count();
 
-        oVenue = venueRepository.findById(Integer.parseInt(venueid));
+        try {
+            oVenue = venueRepository.findById(Integer.parseInt(venueid));
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
+        //oVenue = venueRepository.findById(Integer.parseInt(venueid));
         if(oVenue.isPresent()){
             venue = (Venue) oVenue.get();
         }
