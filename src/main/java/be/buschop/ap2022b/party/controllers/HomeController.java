@@ -125,35 +125,89 @@ public class HomeController {
 
     @GetMapping("/venuelist/hasgoodfood/{foodvalue}")
     public String venuelistHasGoodFoodYes (Model model,@PathVariable Optional<String> foodvalue){
-        boolean food;
-        String myFood;
+        boolean food = false;
+        Integer myFood = 2;
+        Iterable<Venue> venueList = venueRepository.findAll();
+        String test="test";
 
         if(foodvalue.isPresent())
         {
-            myFood = foodvalue.get();
-        }
-        else{
-            myFood = "all";
+            test="ispresent";
+            myFood = Integer.parseInt(foodvalue.get());
         }
 
-        if(myFood == "yes")
+
+        switch(myFood) {
+            case 0:
+                venueList = venueRepository.findByHasGoodFood(false);
+                break;
+            case 1:
+                venueList = venueRepository.findByHasGoodFood(true);
+                break;
+            default:
+                // code block
+        }
+
+        model.addAttribute("venues",venueList);
+        model.addAttribute("food",myFood);
+        return "venuelist";
+    }
+
+    @GetMapping("/venuelist/hasfreeparking/{parkingvalue}")
+    public String venuelistHasFreeParking (Model model,@PathVariable Optional<String> parkingvalue){
+        boolean parking = false;
+        Integer myParking = 2;
+        Iterable<Venue> venueList = venueRepository.findAll();
+
+
+        if(parkingvalue.isPresent())
         {
-            food = true;
+            myParking = Integer.parseInt(parkingvalue.get());
         }
-        else
+
+
+        switch(myParking) {
+            case 0:
+                venueList = venueRepository.findByHasFreeParking(false);
+                break;
+            case 1:
+                venueList = venueRepository.findByHasFreeParking(true);
+                break;
+            default:
+                // code block
+        }
+
+        model.addAttribute("venues",venueList);
+        model.addAttribute("parking",myParking);
+        return "venuelist";
+    }
+
+    @GetMapping("/venuelist/toddlerfriendly/{toddlervalue}")
+    public String venuelistToddlerFriendly (Model model,@PathVariable Optional<String> toddlervalue){
+        boolean toddler = false;
+        Integer myToddler = 2;
+        Iterable<Venue> venueList = venueRepository.findAll();
+
+
+        if(toddlervalue.isPresent())
         {
-            food = false;
+            myToddler = Integer.parseInt(toddlervalue.get());
         }
 
 
-        if(myFood !="all") {
-            Iterable<Venue> venues = venueRepository.findByHasGoodFood(food);
+        switch(myToddler) {
+            case 0:
+                venueList = venueRepository.findByAndToddlerFriendly(false);
+                break;
+            case 1:
+                venueList = venueRepository.findByAndToddlerFriendly(true);
+                break;
+            default:
+                // code block
         }
-        else{
-            Iterable<Venue> venues = venueRepository.findAll();
-        }
-        model.addAttribute("venues",venues);
-        model.addAttribute("foodvalue", foodvalue);
+
+        model.addAttribute("venues",venueList);
+        model.addAttribute("toddler",myToddler);
         return "venuelist";
     }
 

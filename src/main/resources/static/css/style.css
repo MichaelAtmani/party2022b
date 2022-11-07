@@ -13,6 +13,29 @@ p{
     font-size: 12px;
 }
 
+.filter{
+    list-style: none;
+    clear: both;
+    overflow: hidden;
+}
+.filter li a{
+    float:left;
+    background-color: #999999;
+    color: white;
+    display: block;
+    width: 150px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    margin-bottom: 15px;
+    margin-right: 10px;
+}
+
+.filter li .activefilter{
+    background-color: #555555;
+}
 
 
 .buttonlook{
@@ -100,7 +123,7 @@ p{
     width: 10%;
     float: left;
 }
-.buttonlist li a:hover{
+.buttonlist li a:hover, .filter li a:hover{
     background-color: deeppink;
 }
 

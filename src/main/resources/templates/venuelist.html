@@ -10,13 +10,32 @@
 <div class="border"></div>
 <div class="container">
 <h1>Venue list</h1>
+    <p>Lekker eten:</p>
+    <ul class="filter">
+        <li><a th:classappend="${food}==1 ? activefilter : nofilter" href="/venuelist/hasgoodfood/1">Ja</a></li>
+        <li><a th:classappend="${food}==0 ? activefilter : nofilter" href="/venuelist/hasgoodfood/0">Nee</a></li>
+        <li><a th:classappend="${food}==2 ? activefilter : nofilter" href="/venuelist/hasgoodfood/2">Maakt niet uit</a></li>
+    </ul>
+
+    <p>Gratis parking:</p>
+    <ul class="filter">
+        <li><a th:classappend="${parking}==1 ? activefilter : nofilter" href="/venuelist/hasfreeparking/1">Ja</a></li>
+        <li><a th:classappend="${parking}==0 ? activefilter : nofilter" href="/venuelist/hasfreeparking/0">Nee</a></li>
+        <li><a th:classappend="${parking}==2 ? activefilter : nofilter" href="/venuelist/hasfreeparking/2">Maakt niet uit</a></li>
+    </ul>
+    <p>Geschikt voor kleuters:</p>
+    <ul class="filter">
+        <li><a th:classappend="${toddler}==1 ? activefilter : nofilter" href="/venuelist/toddlerfriendly/1">Ja</a></li>
+        <li><a th:classappend="${toddler}==0 ? activefilter : nofilter" href="/venuelist/toddlerfriendly/0">Nee</a></li>
+        <li><a th:classappend="${toddler}==2 ? activefilter : nofilter" href="/venuelist/toddlerfriendly/2">Maakt niet uit</a></li>
+    </ul>
 <ul class="buttonlist">
 
     <li th:each="venue, iStat:${venues}">
         <a th:href="@{|/venuedetailsbyid/*{iStat.index +1}|}" th:text="|${venue.getVenueName()}|" href="">venue name</a>
     </li>
 </ul>
-    <div th:if="${foodvalue}" th:text="${foodvalue}"></div>
+    <div th:if="${test}" th:text="${test}"></div>
 </div>
 <div class="border"></div>
 </html>
