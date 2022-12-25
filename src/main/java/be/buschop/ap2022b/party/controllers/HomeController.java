@@ -17,11 +17,11 @@ public class HomeController {
     private final int mySpecialNumber = 35;
     private final String [] venuenames = {"Carré", "Zillion", "Cherrymoon", "Boccaccio", "Carat"};
 
-    @GetMapping(value = {"/", "/home", "/home/"})
-    public String home (Model model){
-        model.addAttribute("mySpecialNumber",mySpecialNumber);
-        return "home";
-    }
+        @GetMapping(value = {"/", "/home", "/home/"})
+        public String home (Model model){
+            model.addAttribute("mySpecialNumber",mySpecialNumber);
+            return "home";
+        }
 
     @GetMapping("/pay")
     public String pay(Model model){
